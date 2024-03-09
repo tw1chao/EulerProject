@@ -1,37 +1,15 @@
 # The most thoroughly commented embedded CMakeLists
-# Djordje Nedic
 
 # This call is required at the top of every CMakeLists file, it sets the minimum CMake version our project
 # can be built with, and this decides the features that can be used.
 # Generally it is advisable to set it as low as possible until features from the newer versions are required.
 # Another good approach is to check https://repology.org/project/cmake/versions for the CMake versions shipped
 # in most used Linux distributions.
-# cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.13)
 
-
-# This sets up the project name and optionally version, description, homepage and more and stores them in
-# variables that can be used later. For instance, the project name is stored in PROJECT_NAME,
-# description in PROJECT_DESCRIPTION and so on.
-# Resources: https://cmake.org/cmake/help/latest/command/project.html
-# project(STM32_DFU
-#     VERSION 1.0.0
-#     DESCRIPTION "This is a demo project"
-# )
 
 # This sets the languages the project is going to be using, if C++ support is desired add CXX to the list.
 enable_language(C ASM)
-
-# This sets the language standard globally and whether the standard is a requirement.
-# This may not be required, however due to the non-backward compatible nature of C and C++ it is preferred.
-# C11 is a good first choice for projects as it provides useful additions like atomics, however it does away
-# with optional features like VLAs, so C99 or lower might be preferable when working with legacy projects.
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-
-# This controls the inclusion of the GNU extensions to the C language globally, OFF is preferred for more
-# standard and portable C however GNU extensions can provide useful things on top of the base standard.
-# Resources: https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
-set(CMAKE_C_EXTENSIONS OFF)
 
 # This sets a custom microcontroller specific compiler flags variable.
 # First, the cpu variant is set and then the compiler is told to emit thumb instructions.
@@ -127,9 +105,9 @@ add_link_options(
     # This is the linker flags this week that are helpful for monitoring a system’s memory usage, it works in conjunction
     # with --print-memory-usage compiler flags to see the actual size breakdown of each of these regions when the binary is linked.
     # Example:
-    # Memory region         Used Size  Region Size  %age Used
-    #   FLASH:                13512 B      1020 KB      1.29%
-    #   RAM:                    892 B     262136 B      0.34%
+    #  Memory region         Used Size  Region Size  %age Used
+    #  RAM:                     7672 B        20 KB     37.46%
+    #  FLASH:                  14264 B        64 KB     21.77%
     -Wl,--print-memory-usage
 
     # It is also possible to use specific linker command line options to turn off one error message whilst leaving the other enabled.
@@ -209,8 +187,8 @@ target_compile_options(${EXECUTABLE}    PRIVATE
 # bss stores zero initial values that only take up ram.
 # dec and hex are just the cumulative size in decimal and hexadecimal notation respectively.
 # Example:
-# text	   data	    bss	    dec	    hex	filename
-# 3432	     20	   1572	   5024	   13a0	most_commented_embedded_cmakelists.elf
+#     text	   data	    bss	    dec	    hex	filename
+#    14036	    228	   7448	  21712	   54d0	STM32-DFU.elf
 # Resources: https://mcuoneclipse.com/2013/04/14/text-data-and-bss-code-and-data-size-explained/
 add_custom_command(TARGET ${EXECUTABLE}
     POST_BUILD

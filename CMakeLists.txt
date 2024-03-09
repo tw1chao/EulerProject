@@ -12,9 +12,9 @@ endif()
 # adjust project folder name if necessary
 set(STM32_PROJ_FOLDER		   bluepill_dfu)
 
-set(CMAKE_C_STANDARD 					 11)
-set(CMAKE_C_STANDARD_REQUIRED 			 ON)
-set(CMAKE_C_EXTENSIONS 					OFF)
+set(CMAKE_C_STANDARD 					    11)
+set(CMAKE_C_STANDARD_REQUIRED     ON)
+set(CMAKE_C_EXTENSIONS           OFF)
 
 project(${TARGET_NAME}			  
 	VERSION 1.0.0
